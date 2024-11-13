@@ -15,7 +15,7 @@ class caracters() :
     
 class hero(caracters):
     def __init__(self, name, weapons, items):
-        super().__init__(name, 0, 12, 13, 14)
+        super().__init__(name, 0, 10, 100, 5)
         self.inventory = {
             "weapons": weapons,
             "items": items
@@ -28,9 +28,11 @@ class hero(caracters):
             for objet in objets:
                 print(f"  - {objet}")
 
-# Exemple d'utilisation
-
-
+    def afficher_items(self):
+        print("Items:")
+        for item in self.inventory["items"]:
+            print(f"{item}")
+        return self.inventory["items"]
 
 
 class dragon(caracters) :
@@ -44,7 +46,7 @@ class dragon(caracters) :
         print(self.name, "utilise", self.capacity_name, self.name, "recupere 50 hp")
         
 falmer = caracters("Falmer", 60, 50, 90, 13)
-skeleton = caracters("Skeleton", 15, 50, 160, 5)
+skeleton = caracters("Skeleton", 35, 25, 160, 5)
 
 allcaracters = [falmer, skeleton]
 

@@ -1,17 +1,17 @@
 from weapons import all_weapons
 from items import healing_potion
+from items import defensive_potion
 import msvcrt
 import time
 from caracters import hero
 
 Potion = healing_potion("Medium",50)
 Grosse_Potion = healing_potion("Big", 80)
-all_items = [Potion, Grosse_Potion]
+Medium_defense_potion = defensive_potion("Medium", 10)
+all_items = [Potion, Grosse_Potion, Medium_defense_potion]
 Me = hero("Raphael", all_weapons, all_items)
 
-Me.afficher_inventaire()
-
-"""def fight(monster):
+def fight(monster):
     max_hp = monster.hp
     max_hp_hero = Me.hp
     while monster.hp > 0 and Me.hp > 0:
@@ -56,6 +56,9 @@ Me.afficher_inventaire()
             
             elif touche == '3':
                 print("Opening inventory...")
+                if inventory_in_fight() == True :
+                    continue
+                print("\n")
 
             elif touche == '4':
                 print("You chose to run away!")
@@ -84,6 +87,9 @@ Me.afficher_inventaire()
 
             elif touche == '3':
                 print("Opening inventory...")
+                if inventory_in_fight() == True :
+                    continue
+                print("\n")
 
             elif touche == '4':
                 print("You chose to run away!")
@@ -109,6 +115,41 @@ Me.afficher_inventaire()
             print("You were defeated...")
             monster.hp = max_hp
             Me.hp = max_hp_hero
-            break"""
+            break
 
             
+def inventory_in_fight():
+    while True:
+        print("What do you want to do?")
+        print("Your inventory:")
+        
+        for idx, item in enumerate(Me.inventory["items"]):
+            print(f"{idx}. {item.name}")
+        
+        print("Type the ID of the item you want to use or type 'leave' to exit the inventory.")
+        
+        user_input = input("Your choice: ")
+        
+        if user_input.lower() == "leave":
+            print("Leaving inventory.")
+            return True
+
+        if user_input.isdigit():
+            item_id = int(user_input)
+            
+            if 0 <= item_id < len(Me.inventory["items"]):
+                item = Me.inventory["items"][item_id]
+                
+                if hasattr(item, 'use'):
+                    item.use(Me)  
+                    print(f"You used {item.name} and restored some health.")
+                    del Me.inventory["items"][item_id]
+                    return False
+                else:
+                    print(f"{item.name} cannot be used in this way.")
+            else:
+                print("Invalid ID, please try again.")
+        else:
+            print("Invalid input, please enter a valid ID or 'leave'.")
+
+    

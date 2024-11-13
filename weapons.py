@@ -13,5 +13,6 @@ class weapons():
 
 Blade = weapons("Blade of the lich king", 80, 10)
 Bow = weapons("Sylvanas Bow", 100, 20)
+Knife = weapons("Knife", 50, 10)
 
-all_weapons = [Blade, Bow]
+all_weapons = [Knife]
